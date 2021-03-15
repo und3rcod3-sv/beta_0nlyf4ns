@@ -5,8 +5,9 @@
 
     // Agregar todo lo importante por aqui
     require('./core/conection.php');
+    require('./core/functions/template.php');
 
-    var_dump($conection->query('SELECT * FROM USERS'));
+    // var_dump($conection->query('SELECT * FROM USERS'));
 
     // EJEMPLO DE COMO CREAR DATOS POR EL MOMENTO
 
@@ -24,11 +25,14 @@
       $conection->insertar($table, $array);
     } else {
 
-      var_dump($conection->asociativo($sql));
+      // var_dump($conection->asociativo($sql));
     }
 
     $template = "home";
     $theme = 'default';
 
-    // Add template
+
+    include 'core/classes/orm/model.php';
+
+    
     include('./template/' . $theme . '/' . $template . '.php');

@@ -5,6 +5,8 @@
   class Conection extends PDO
   {
     // private $con;
+    private $sql;
+
     function __construct($db_host, $db_name, $db_user, $db_password)
     {
       $dns = sprintf('mysql:host=%s;dbname=%s', $db_host, $db_name);
@@ -25,6 +27,24 @@
     {
       $sql = htmlentities(addslashes($sql));
       return $this->query($sql);
+    }
+
+    /**
+    *
+    * @param { $table: Nombre de la tabla, $type: select, delete, update }
+    * @return
+    */
+    public function consulta_preparada($tabla, $type){
+      switch (strtolower($type)) {
+        case 'select':
+          $this->sql = 'SELECT %s FROM `' . $tabla . '` ';
+          break;
+
+        default:
+          // code...
+          break;
+      }
+      return $this;
     }
 
     /**
@@ -123,16 +143,6 @@
       $con = $this->prepare($sql);
       $con->execute();
       return $con->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    /**
-    *
-    * @param $consulta, consulta normal
-    * @return
-    */
-    public function consulta_preparada($consulta){
-      $sql = $this->prepare($consulta);
-      return $sql->execute();
     }
 
   }
